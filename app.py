@@ -2,13 +2,18 @@ import asyncio
 from aiogram import Bot, Dispatcher, executor
 from aiogram.types import Message
 
-from config import BOT_TOKEN
+from config import BOT_TOKEN, AV_ID
 
-PROXY_URL="http://54.37.14.65:3132"
+PROXY_URL="http://197.216.2.18:8080"
 
 loop = asyncio.get_event_loop()
 bot = Bot(BOT_TOKEN, proxy=PROXY_URL, parse_mode="HTML")
 dp = Dispatcher(bot, loop=loop)
+
+async def send_to_start(dp):
+	await bot.send_message(chat_id=AV_ID, text="!!!Бот запущен!!!")
+
+
 
 @dp.message_handler()
 async def echo(message: Message):
@@ -18,4 +23,4 @@ async def echo(message: Message):
 
 if __name__ == "__main__":
 	
-	executor.start_polling(dp)
+	executor.start_polling(dp, on_startup=send_to_start)
