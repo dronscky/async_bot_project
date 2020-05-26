@@ -9,6 +9,22 @@ def _init_db():
 	cursor.executescript(sql)
 	conn.commit()
 
+def get_cursor():
+	return cursor
+
+
+
+'''
+Dictionary must be {'vote': '', 'abbrev': ''} 
+or {'house_population':, 'abbrev': ''}
+'''
+def upd_db(d):
+	columns = [*d.keys()]
+	values = [*d.values()]
+	sql = f'UPDATE U275 SET {columns[0]}={values[0]} WHERE {columns[1]}={values[1]}'
+	cursor.execute(sql)
+	conn.commit()
+
 """пример реализации с декоратором"""
 # def db(func):
 # 	def wrapper(*args, **kwargs):
@@ -23,7 +39,7 @@ def insert_db():
 	sql = f""
 
 def selectdb():
-	sql = f"SELECT * FROM U275"
+	sql = f"SELECT * FROM U275 WHERE abbrev={'K19'}"
 	cursor.execute(sql)
 	print(cursor.fetchall())
 
