@@ -21,7 +21,7 @@ or {'house_population':, 'abbrev': ''}
 def upd_db(d):
 	columns = [*d.keys()]
 	values = [*d.values()]
-	sql = f'UPDATE U275 SET {columns[0]}={values[0]} WHERE {columns[1]}={values[1]}'
+	sql = f"UPDATE U275 SET {columns[0]}='{values[0]}' WHERE {columns[1]}='{values[1]}'"
 	cursor.execute(sql)
 	conn.commit()
 
@@ -39,7 +39,7 @@ def insert_db():
 	sql = f""
 
 def selectdb():
-	sql = f"SELECT * FROM U275 WHERE abbrev={'K19'}"
+	sql = f"SELECT * FROM U275 WHERE abbrev='K19'"
 	cursor.execute(sql)
 	print(cursor.fetchall())
 
