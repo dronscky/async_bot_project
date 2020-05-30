@@ -5,7 +5,7 @@ from aiogram.types import Message
 from config import BOT_TOKEN, AV_ID
 import voting
 
-PROXY_URL="http://37.233.99.144:3128"
+PROXY_URL="http://190.145.40.202:80"
 
 loop = asyncio.get_event_loop()
 bot = Bot(BOT_TOKEN, proxy=PROXY_URL, parse_mode="HTML")
@@ -25,10 +25,21 @@ async def send_to_start(dp):
 @dp.message_handler(commands=['v'])
 async def add_voting(message: Message):
 	mes = message.text
-	voting.add_vote(mes)
-	text = f"Изменения внесены"
-	
-	# text = f"Изменения внесены, общее число проголосовавших по адресу {} ({}%). По участку {}%."
+	res = voting.add_vote(mes)
+	if res == 'Error':
+		text = "Ошибка данных"
+	else:
+		text = f"Изменения внесены, общее число проголосовавших по адресу {res[0]} ({res[1]}%). По участку {res[2]}%."
+	await bot.send_message(chat_id=message.from_user.id, text=text)
+
+@dp.message_handler(commands=['c'])
+async def change_popul(message: Message):
+	mes = message.text
+	res = voting.ch_num_people(mes)
+	if res == 'Error':
+		text = "Ошибка данных"
+	else:
+		text = "Изменения внесены"
 	await bot.send_message(chat_id=message.from_user.id, text=text)
 
 

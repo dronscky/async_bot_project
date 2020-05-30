@@ -2,6 +2,8 @@ import sqlite3
 import os
 from config import PATH
 
+#### доработать входные данные если нет 2го параметра
+### доработать фильтр /c
 
 conn = sqlite3.connect(os.path.join(PATH, 'mydb.db'))
 cursor = conn.cursor()
@@ -15,8 +17,6 @@ def _init_db():
 def get_cursor():
 	return cursor
 
-
-
 '''
 Dictionary must be {'vote': '', 'abbrev': ''} 
 or {'house_population':, 'abbrev': ''}
@@ -24,9 +24,25 @@ or {'house_population':, 'abbrev': ''}
 def upd_db(d):
 	columns = [*d.keys()]
 	values = [*d.values()]
-	sql = f"UPDATE U275 SET {columns[0]}='{values[0]}' WHERE {columns[1]}='{values[1]}'"
-	cursor.execute(sql)
+	if values[1] != 'D':
+		sql = f"UPDATE U275 SET {columns[0]}='{values[0]}' WHERE {columns[1]}='{values[1]}'"
+	else: 
+		sql = f"UPDATE U275 SET vote='{values[0]}', house_population='{values[0]}' WHERE {columns[1]}='{values[1]}'"
+	cursor.execute(sql)	
 	conn.commit()
+
+'''
+col is vote or house_population
+'''
+def sum(col):
+	sql = f"SELECT SUM({col}) FROM U275"
+	cursor.execute(sql)
+	return cursor.fetchone()[0]
+
+def get_house_info(col, abbrev):
+	sql = f"SELECT {col} FROM U275 WHERE abbrev='{abbrev}'"
+	cursor.execute(sql)
+	return cursor.fetchone()[0]
 
 """пример реализации с декоратором"""
 # def db(func):
@@ -38,9 +54,6 @@ def upd_db(d):
 # 		conn.commit()
 # 	return wrapper
 
-def insert_db():
-	sql = f""
-
 def selectdb():
 	sql = f"SELECT * FROM U275"
 	cursor.execute(sql)
@@ -49,7 +62,7 @@ def selectdb():
 if __name__ == '__main__':
 	# _init_db()
 	selectdb()
-
+	# sum('house_population')
 
 ### Insert new data
 # sql = """INSERT INTO U275 (address, abbrev, vote, house_population, uik_population)
