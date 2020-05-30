@@ -2,9 +2,6 @@ import sqlite3
 import os
 from config import PATH
 
-#### доработать входные данные если нет 2го параметра
-### доработать фильтр /c
-
 conn = sqlite3.connect(os.path.join(PATH, 'mydb.db'))
 cursor = conn.cursor()
 

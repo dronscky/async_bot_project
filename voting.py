@@ -1,6 +1,9 @@
 import db
 import re
 
+#### доработать входные данные если нет 2го параметра
+### доработать фильтр /c
+
 def add_vote(message):
 	if parse_mesg(message) != 'Error data':
 		abbrev, vote = parse_mesg(message)
@@ -23,7 +26,7 @@ def ch_num_people(message):
 		return  "Error"	
 
 def parse_mesg(message):
-	result = re.search(r'/v (.+) (.+)', message)
+	result = re.search(r'/v|c (.+) (.+)', message)
 	if re.search(r'K9|K15|K17|K19|K21|D', result.group(1)) and re.search(r'\d+', result.group(2)):
 		return result.group(1), result.group(2)
 	else:
