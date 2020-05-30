@@ -3,8 +3,9 @@ from aiogram import Bot, Dispatcher, executor
 from aiogram.types import Message
 
 from config import BOT_TOKEN, AV_ID
+import voting
 
-PROXY_URL="http://197.216.2.18:8080"
+PROXY_URL="http://37.233.99.144:3128"
 
 loop = asyncio.get_event_loop()
 bot = Bot(BOT_TOKEN, proxy=PROXY_URL, parse_mode="HTML")
@@ -15,11 +16,21 @@ async def send_to_start(dp):
 
 
 
-@dp.message_handler()
-async def echo(message: Message):
-	text = f"Вы написали {message.text}"
+# @dp.message_handler()
+# async def echo(message: Message):
+# 	text = f"Вы написали {message.text}"
+# 	await bot.send_message(chat_id=message.from_user.id, text=text)
+# 	# await message.answer(text=text)
+
+@dp.message_handler(commands=['v'])
+async def add_voting(message: Message):
+	mes = message.text
+	voting.add_vote(mes)
+	text = f"Изменения внесены"
+	
+	# text = f"Изменения внесены, общее число проголосовавших по адресу {} ({}%). По участку {}%."
 	await bot.send_message(chat_id=message.from_user.id, text=text)
-	# await message.answer(text=text)
+
 
 if __name__ == "__main__":
 	

@@ -12,7 +12,7 @@ def ch_num_people():
 	db.upd_db(d)
 
 def parse_mesg(message):
-	result = re.search(r'(.+) (.+)', message)
+	result = re.search(r'/v (.+) (.+)', message)
 	return result.group(1), result.group(2)
 	
 
@@ -22,4 +22,5 @@ def stat_house():
 def stat_uik():
 	pass
 
-add_vote('K19 2')
+# if __name__ == "__main__":
+# 	add_vote('/v K9 2')

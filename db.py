@@ -1,6 +1,9 @@
 import sqlite3
+import os
+from config import PATH
 
-conn = sqlite3.connect('mydb.db')
+
+conn = sqlite3.connect(os.path.join(PATH, 'mydb.db'))
 cursor = conn.cursor()
 
 def _init_db():
@@ -39,7 +42,7 @@ def insert_db():
 	sql = f""
 
 def selectdb():
-	sql = f"SELECT * FROM U275 WHERE abbrev='K19'"
+	sql = f"SELECT * FROM U275"
 	cursor.execute(sql)
 	print(cursor.fetchall())
 
