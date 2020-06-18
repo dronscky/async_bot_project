@@ -26,12 +26,15 @@ def ch_num_people(message):
 		return  "Error"	
 
 def parse_mesg(message):
-	result = re.search(r'/v|c (.+) (.+)', message)
-	if re.search(r'K9|K15|K17|K19|K21|D', result.group(1)) and re.search(r'\d+', result.group(2)):
-		return result.group(1), result.group(2)
-	else:
+	result = re.search(r'\/(v|c) (.+) (.+)', message)
+	if result:
+		if re.search(r'K9|K15|K17|K19|K21|D', result.group(2)) and re.search(r'\d+', result.group(3)):
+			return result.group(2), result.group(3)
+		else:
+			return 'Error data'
+	else:	
 		return 'Error data'
-
+		
 def get_address_house(abbrev):
 	return db.get_house_info('address', abbrev)
 

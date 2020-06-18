@@ -2,6 +2,7 @@ import sqlite3
 import os
 from config import PATH
 
+
 conn = sqlite3.connect(os.path.join(PATH, 'mydb.db'))
 cursor = conn.cursor()
 
