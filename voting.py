@@ -1,9 +1,6 @@
 import db
 import re
 
-#### доработать входные данные если нет 2го параметра
-### доработать фильтр /c
-
 def add_vote(message):
 	if parse_mesg(message) != 'Error data':
 		abbrev, vote = parse_mesg(message)
@@ -42,7 +39,7 @@ def calc_stat_house(n, abbrev):
 	return round(int(n)/db.get_house_info('house_population', abbrev)*100, 1)
 
 def calc_stat_uik():
-	return round(db.sum('vote')/db.sum('house_population')*100, 1)
+	return db.show_report()
 
 # if __name__ == "__main__":
 # 	add_vote('/v K9 2')

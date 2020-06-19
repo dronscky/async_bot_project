@@ -5,7 +5,7 @@ from aiogram.types import Message
 from config import BOT_TOKEN, AV_ID
 import voting
 
-PROXY_URL="http://46.191.128.136:8080"
+PROXY_URL="http://52.142.204.62:80"
 
 loop = asyncio.get_event_loop()
 bot = Bot(BOT_TOKEN, proxy=PROXY_URL, parse_mode="HTML")
@@ -14,8 +14,10 @@ dp = Dispatcher(bot, loop=loop)
 async def send_to_start(dp):
 	await bot.send_message(chat_id=AV_ID, text="!!!Бот запущен!!!")
 
-
-
+@dp.message_handler(commands=['r'])
+async def report(message: Message):
+	text = voting.calc_stat_uik()
+	await bot.send_message(chat_id=message.from_user.id, text=text)
 # @dp.message_handler()
 # async def echo(message: Message):
 # 	text = f"Вы написали {message.text}"

@@ -57,6 +57,25 @@ def selectdb():
 	cursor.execute(sql)
 	print(cursor.fetchall())
 
+#### Test summary report
+
+def report_voting():
+	sql = f"SELECT address, vote, house_population FROM U275"
+	cursor.execute(sql)
+	res = cursor.fetchall()
+	return res
+
+def show_report():
+	data = report_voting()
+	s = ''
+	for i in data:
+		s = s + f'{i[0]} проголосовало {i[1]} из {i[2]} \n'
+	v = sum('vote')
+	hp = sum('house_population')
+	s = s + f'Всего проголосовало {str(v)} из {str(hp)} ({round(v/hp*100, 2)}%)'	
+	return s
+####
+
 if __name__ == '__main__':
 	# _init_db()
 	selectdb()
