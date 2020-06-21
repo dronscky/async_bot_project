@@ -5,10 +5,11 @@ from aiogram.types import Message
 from config import BOT_TOKEN, AV_ID
 import voting
 
-PROXY_URL="http://52.142.204.62:80"
+# PROXY_URL="http://52.142.204.62:80"
 
 loop = asyncio.get_event_loop()
-bot = Bot(BOT_TOKEN, proxy=PROXY_URL, parse_mode="HTML")
+# bot = Bot(BOT_TOKEN, proxy=PROXY_URL, parse_mode="HTML")
+bot = Bot(BOT_TOKEN, parse_mode="HTML")
 dp = Dispatcher(bot, loop=loop)
 
 async def send_to_start(dp):
